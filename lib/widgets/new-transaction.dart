@@ -1,6 +1,7 @@
 import 'package:expense_tracker/models/transaction.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:intl/intl.dart';
 
 class NewTransaction extends StatefulWidget {
   final Function addTransaction;
@@ -15,11 +16,13 @@ class _NewTransactionState extends State<NewTransaction> {
   final titleController = TextEditingController();
   final amountController = TextEditingController();
   TransactionType? dropdownValue = TransactionType.Outcome;
+  DateTime? _pickedDate = DateTime.now();
 
   void submitData() {
     if (titleController.text.isEmpty ||
         amountController.text.isEmpty ||
-        dropdownValue == null) return;
+        dropdownValue == null ||
+        _pickedDate == null) return;
 
     final String enteredTitle = titleController.text;
     final double enteredAmount = double.parse(amountController.text);
@@ -30,12 +33,28 @@ class _NewTransactionState extends State<NewTransaction> {
       titleController.text,
       dropdownValue,
       double.parse(amountController.text),
+      _pickedDate,
     );
 
     titleController.clear();
     amountController.clear();
+    _pickedDate = DateTime.now();
 
     Navigator.pop(context);
+  }
+
+  void _presentDatePicker() {
+    showDatePicker(
+      context: context,
+      initialDate: DateTime.now(),
+      firstDate: DateTime(2017),
+      lastDate: DateTime.now(),
+    ).then((pickedDate) {
+      if (pickedDate == null) return;
+      setState(() {
+        _pickedDate = pickedDate;
+      });
+    });
   }
 
   @override
@@ -93,15 +112,41 @@ class _NewTransactionState extends State<NewTransaction> {
               },
             ),
             Container(
-              margin: EdgeInsets.only(top: 20),
+              margin: EdgeInsets.only(top: 5),
+              child: Row(
+                children: [
+                  Expanded(
+                    child: Text(
+                      _pickedDate == null
+                          ? 'No date picked'
+                          : DateFormat.yMd().format(_pickedDate!),
+                      style: TextStyle(fontSize: 16),
+                    ),
+                  ),
+                  TextButton(
+                    child: Padding(
+                      padding: EdgeInsets.symmetric(
+                        vertical: 15,
+                      ),
+                      child: Icon(
+                        Icons.calendar_today_rounded,
+                        // size: 18,
+                        color: Theme.of(context).primaryColor,
+                      ),
+                    ),
+                    onPressed: _presentDatePicker,
+                  )
+                ],
+              ),
+            ),
+            Container(
+              margin: EdgeInsets.only(top: 30),
               child: ElevatedButton(
                 onPressed: submitData,
-                child: Container(
-                  padding: EdgeInsets.only(
-                    top: 10,
-                    bottom: 10,
-                    left: 22,
-                    right: 22,
+                child: Padding(
+                  padding: EdgeInsets.symmetric(
+                    vertical: 10,
+                    horizontal: 22,
                   ),
                   child: Text('Add Item'),
                 ),

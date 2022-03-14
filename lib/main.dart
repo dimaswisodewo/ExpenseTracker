@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
 import './widgets/transaction-list.dart';
 import './widgets/new-transaction.dart';
+import './widgets/chart.dart';
 import './models/transaction.dart';
 
 main() {
@@ -24,6 +25,9 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         fontFamily: 'Poppins',
         primarySwatch: Colors.teal,
+        textTheme: ThemeData.light().textTheme.copyWith(
+              button: TextStyle(color: Colors.white),
+            ),
       ),
       home: MyHomePage(),
     );
@@ -40,6 +44,17 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   final NumberFormat formatter = NumberFormat.currency(locale: 'id_ID');
   List<Transaction> _userTransactions = [];
+
+  // Get recent transactions in the last week
+  List<Transaction> get _recentTransactions {
+    return _userTransactions.where((transaction) {
+      return transaction.date.isAfter(
+        DateTime.now().subtract(
+          Duration(days: 7),
+        ),
+      );
+    }).toList();
+  }
 
   // On tap floating Add Icon Button
   void startAddNewTransaction(BuildContext ctx) {
@@ -58,17 +73,24 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   // On tap Add transaction Elevated Button
-  void addTransaction(String title, TransactionType type, double amount) {
+  void addTransaction(
+      String title, TransactionType type, double amount, DateTime date) {
     Transaction newTransaction = Transaction(
       id: DateTime.now().toString(),
       title: title,
       type: type,
       amount: amount,
-      date: DateTime.now(),
+      date: date,
     );
 
     setState(() {
       _userTransactions.add(newTransaction);
+    });
+  }
+
+  void deleteTransaction(String transactionId) {
+    setState(() {
+      _userTransactions.removeWhere((element) => element.id == transactionId);
     });
   }
 
@@ -113,7 +135,10 @@ class _MyHomePageState extends State<MyHomePage> {
             : MainAxisAlignment.start,
         children: _userTransactions.isEmpty
             ? [
-                TransactionList(transactions: _userTransactions),
+                TransactionList(
+                  transactions: _userTransactions,
+                  deleteTransaction: deleteTransaction,
+                ),
               ]
             : [
                 Container(
@@ -154,7 +179,11 @@ class _MyHomePageState extends State<MyHomePage> {
                     ],
                   ),
                 ),
-                TransactionList(transactions: _userTransactions),
+                Chart(_recentTransactions),
+                TransactionList(
+                  transactions: _userTransactions,
+                  deleteTransaction: deleteTransaction,
+                ),
               ],
       ),
       floatingActionButton: FloatingActionButton(

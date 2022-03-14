@@ -10,6 +10,7 @@ class TransactionItem extends StatelessWidget {
   final double amount;
   final DateTime date;
   final NumberFormat formatCurrency = NumberFormat.currency(locale: 'id_ID');
+  final Function deleteTransaction;
 
   TransactionItem({
     Key? key,
@@ -17,6 +18,7 @@ class TransactionItem extends StatelessWidget {
     required this.type,
     required this.amount,
     required this.date,
+    required this.deleteTransaction,
   }) : super(key: key);
 
   @override
@@ -101,6 +103,18 @@ class TransactionItem extends StatelessWidget {
                 ),
               ),
             ),
+            SizedBox(width: 10),
+            Expanded(
+              child: IconButton(
+                icon: Icon(
+                  Icons.delete,
+                  color: Theme.of(context).errorColor,
+                ),
+                onPressed: () {
+                  deleteTransaction();
+                },
+              ),
+            )
           ],
         ),
       ),
