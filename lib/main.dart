@@ -1,5 +1,6 @@
 // import 'dart:html';
-
+// import 'dart:io';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
@@ -123,6 +124,18 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
+    // final ObstructingPreferredSizeWidget appBarIOS = CupertinoNavigationBar(
+    //   middle: Text('Expense Tracker'),
+    //   trailing: Row(
+    //     children: [
+    //       GestureDetector(
+    //         child: Icon(CupertinoIcons.add),
+    //         onTap: () => startAddNewTransaction(context),
+    //       ),
+    //     ],
+    //   ),
+    // );
+
     final appBar = AppBar(
       title: Text('Expense Tracker'),
       actions: [
@@ -132,97 +145,107 @@ class _MyHomePageState extends State<MyHomePage> {
         ),
       ],
     );
-    return Scaffold(
-      appBar: appBar,
-      // backgroundColor: Color(0xFFF7F4F7),
-      body: Column(
-        children: [
-          Container(
-            height: 60,
-            color: Colors.white,
-            padding: EdgeInsets.only(
-              top: 20,
-              bottom: 16,
-              right: 22,
-              left: 22,
-            ),
-            // margin: EdgeInsets.only(bottom: 10),
-            child: Row(
-              children: [
-                Expanded(
-                  flex: 1,
-                  child: Center(
-                    child: Text(
-                      getOutcome(),
-                      style: TextStyle(
-                        color: Colors.red,
-                        // fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                  ),
-                ),
-                Expanded(
-                  flex: 1,
-                  child: Center(
-                    child: Text(
-                      getIncome(),
-                      style: TextStyle(
-                        color: Colors.green,
-                        // fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ),
-          Container(
-            height: 60,
-            padding: EdgeInsets.symmetric(horizontal: 10),
-            child: Row(
-              children: [
-                Text('Show Chart',
-                    style: TextStyle(
-                      color: Theme.of(context).primaryColor,
-                    )),
-                Switch(
-                    value: _showChart,
-                    onChanged: (newValue) {
-                      if (newValue)
-                        _chartHeight = 250;
-                      else
-                        _chartHeight = 0;
 
-                      setState(() {
-                        _showChart = newValue;
-                      });
-                    })
-              ],
-            ),
+    final appBody = Column(
+      children: [
+        Container(
+          height: 60,
+          color: Colors.white,
+          padding: EdgeInsets.only(
+            top: 20,
+            bottom: 16,
+            right: 22,
+            left: 22,
           ),
-          _showChart == true
-              ? Container(
-                  height: 250,
-                  margin: EdgeInsets.symmetric(horizontal: 3),
-                  child: Chart(_recentTransactions),
-                )
-              : Container(
-                  height: 0,
+          // margin: EdgeInsets.only(bottom: 10),
+          child: Row(
+            children: [
+              Expanded(
+                flex: 1,
+                child: Center(
+                  child: Text(
+                    getOutcome(),
+                    style: TextStyle(
+                      color: Colors.red,
+                      // fontWeight: FontWeight.bold,
+                    ),
+                  ),
                 ),
-          Container(
-            height: (MediaQuery.of(context).size.height -
-                MediaQuery.of(context).padding.top -
-                appBar.preferredSize.height -
-                60 -
-                _chartHeight -
-                60),
-            child: TransactionList(
-              transactions: _userTransactions,
-              deleteTransaction: deleteTransaction,
-            ),
+              ),
+              Expanded(
+                flex: 1,
+                child: Center(
+                  child: Text(
+                    getIncome(),
+                    style: TextStyle(
+                      color: Colors.green,
+                      // fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
+              ),
+            ],
           ),
-        ],
-      ),
+        ),
+        Container(
+          height: 60,
+          padding: EdgeInsets.symmetric(horizontal: 10),
+          child: Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Text('Show Chart',
+                  style: TextStyle(
+                    color: Theme.of(context).primaryColor,
+                  )),
+              Switch(
+                  value: _showChart,
+                  onChanged: (newValue) {
+                    if (newValue)
+                      _chartHeight = 250;
+                    else
+                      _chartHeight = 0;
+
+                    setState(() {
+                      _showChart = newValue;
+                    });
+                  })
+            ],
+          ),
+        ),
+        _showChart == true
+            ? Container(
+                height: 250,
+                margin: EdgeInsets.symmetric(horizontal: 3),
+                child: Chart(_recentTransactions),
+              )
+            : Container(
+                height: 0,
+              ),
+        Container(
+          height: (MediaQuery.of(context).size.height -
+              MediaQuery.of(context).padding.top -
+              appBar.preferredSize.height -
+              60 -
+              _chartHeight -
+              60),
+          child: TransactionList(
+            transactions: _userTransactions,
+            deleteTransaction: deleteTransaction,
+          ),
+        ),
+      ],
+    );
+
+    return
+        //  Platform.isIOS
+        //     ? CupertinoPageScaffold(
+        //         navigationBar: appBarIOS,
+        //         child: SafeArea(child: appBody),
+        //       )
+        //     :
+        Scaffold(
+      appBar: appBar,
+      body: SafeArea(child: appBody),
       floatingActionButton: FloatingActionButton(
         child: Icon(Icons.add),
         onPressed: () => startAddNewTransaction(context),
