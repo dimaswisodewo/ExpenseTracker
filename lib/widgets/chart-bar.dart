@@ -17,6 +17,7 @@ class ChartBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // return LayoutBuilder(builder: (ctx, constraints) {
     return Column(
       children: [
         FittedBox(
@@ -26,9 +27,13 @@ class ChartBar extends StatelessWidget {
                 color: Colors.green,
               )),
         ),
-        SizedBox(height: 10),
+        SizedBox(
+          // height: constraints.maxHeight * 0.05,
+          height: 10,
+        ),
         Container(
-          height: 50,
+          // height: constraints.maxHeight * 0.2,
+          height: 35,
           width: 20,
           child: Stack(
             children: [
@@ -61,7 +66,8 @@ class ChartBar extends StatelessWidget {
           ),
         ),
         Container(
-          height: 50,
+          // height: constraints.maxHeight * 0.2,
+          height: 35,
           width: 20,
           child: Stack(
             children: [
@@ -90,7 +96,10 @@ class ChartBar extends StatelessWidget {
             ],
           ),
         ),
-        SizedBox(height: 10),
+        SizedBox(
+          // height: constraints.maxHeight * 0.05,
+          height: 10,
+        ),
         FittedBox(
           child: Text('-$outcomeAmount',
               style: TextStyle(
@@ -98,15 +107,21 @@ class ChartBar extends StatelessWidget {
                 color: Colors.red,
               )),
         ),
-        SizedBox(height: 10),
-        Text(
-          label,
-          style: TextStyle(
-            fontSize: 11,
-            color: Colors.grey,
+        SizedBox(
+          // height: constraints.maxHeight * 0.05,
+          height: 10,
+        ),
+        FittedBox(
+          child: Text(
+            label,
+            style: TextStyle(
+              fontSize: 11,
+              color: Colors.grey,
+            ),
           ),
         ),
       ],
     );
+    // });
   }
 }

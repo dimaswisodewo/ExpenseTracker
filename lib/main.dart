@@ -1,3 +1,5 @@
+// import 'dart:html';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
@@ -25,9 +27,9 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         fontFamily: 'Poppins',
         primarySwatch: Colors.teal,
-        textTheme: ThemeData.light().textTheme.copyWith(
-              button: TextStyle(color: Colors.white),
-            ),
+        // textTheme: ThemeData.light().textTheme.copyWith(
+        //       button: TextStyle(color: Colors.white),
+        //     ),
       ),
       home: MyHomePage(),
     );
@@ -43,7 +45,10 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   final NumberFormat formatter = NumberFormat.currency(locale: 'id_ID');
+
   List<Transaction> _userTransactions = [];
+  bool _showChart = false;
+  int _chartHeight = 0;
 
   // Get recent transactions in the last week
   List<Transaction> get _recentTransactions {
@@ -118,73 +123,105 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
+    final appBar = AppBar(
+      title: Text('Expense Tracker'),
+      actions: [
+        IconButton(
+          onPressed: () => startAddNewTransaction(context),
+          icon: Icon(Icons.add),
+        ),
+      ],
+    );
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Expense Tracker'),
-        actions: [
-          IconButton(
-            onPressed: () => startAddNewTransaction(context),
-            icon: Icon(Icons.add),
-          ),
-        ],
-      ),
+      appBar: appBar,
       // backgroundColor: Color(0xFFF7F4F7),
       body: Column(
-        mainAxisAlignment: _userTransactions.isEmpty
-            ? MainAxisAlignment.center
-            : MainAxisAlignment.start,
-        children: _userTransactions.isEmpty
-            ? [
-                TransactionList(
-                  transactions: _userTransactions,
-                  deleteTransaction: deleteTransaction,
-                ),
-              ]
-            : [
-                Container(
-                  color: Colors.white,
-                  padding: EdgeInsets.only(
-                    top: 20,
-                    bottom: 16,
-                    right: 22,
-                    left: 22,
-                  ),
-                  margin: EdgeInsets.only(bottom: 10),
-                  child: Row(
-                    children: [
-                      Expanded(
-                        flex: 1,
-                        child: Center(
-                          child: Text(
-                            getOutcome(),
-                            style: TextStyle(
-                              color: Colors.red,
-                              // fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                        ),
+        children: [
+          Container(
+            height: 60,
+            color: Colors.white,
+            padding: EdgeInsets.only(
+              top: 20,
+              bottom: 16,
+              right: 22,
+              left: 22,
+            ),
+            // margin: EdgeInsets.only(bottom: 10),
+            child: Row(
+              children: [
+                Expanded(
+                  flex: 1,
+                  child: Center(
+                    child: Text(
+                      getOutcome(),
+                      style: TextStyle(
+                        color: Colors.red,
+                        // fontWeight: FontWeight.bold,
                       ),
-                      Expanded(
-                        flex: 1,
-                        child: Center(
-                          child: Text(
-                            getIncome(),
-                            style: TextStyle(
-                              color: Colors.green,
-                              // fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                        ),
-                      ),
-                    ],
+                    ),
                   ),
                 ),
-                Chart(_recentTransactions),
-                TransactionList(
-                  transactions: _userTransactions,
-                  deleteTransaction: deleteTransaction,
+                Expanded(
+                  flex: 1,
+                  child: Center(
+                    child: Text(
+                      getIncome(),
+                      style: TextStyle(
+                        color: Colors.green,
+                        // fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ),
                 ),
               ],
+            ),
+          ),
+          Container(
+            height: 60,
+            padding: EdgeInsets.symmetric(horizontal: 10),
+            child: Row(
+              children: [
+                Text('Show Chart',
+                    style: TextStyle(
+                      color: Theme.of(context).primaryColor,
+                    )),
+                Switch(
+                    value: _showChart,
+                    onChanged: (newValue) {
+                      if (newValue)
+                        _chartHeight = 250;
+                      else
+                        _chartHeight = 0;
+
+                      setState(() {
+                        _showChart = newValue;
+                      });
+                    })
+              ],
+            ),
+          ),
+          _showChart == true
+              ? Container(
+                  height: 250,
+                  margin: EdgeInsets.symmetric(horizontal: 3),
+                  child: Chart(_recentTransactions),
+                )
+              : Container(
+                  height: 0,
+                ),
+          Container(
+            height: (MediaQuery.of(context).size.height -
+                MediaQuery.of(context).padding.top -
+                appBar.preferredSize.height -
+                60 -
+                _chartHeight -
+                60),
+            child: TransactionList(
+              transactions: _userTransactions,
+              deleteTransaction: deleteTransaction,
+            ),
+          ),
+        ],
       ),
       floatingActionButton: FloatingActionButton(
         child: Icon(Icons.add),

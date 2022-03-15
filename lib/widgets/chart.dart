@@ -48,16 +48,17 @@ class Chart extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print(_groupedTransactionValues);
     return Card(
-      margin: EdgeInsets.only(bottom: 10),
+      margin: EdgeInsets.only(bottom: 5),
       elevation: 3,
-      child: Padding(
+      child: Container(
         padding: const EdgeInsets.symmetric(
-          vertical: 20,
-          horizontal: 20,
+          vertical: 10,
+          horizontal: 10,
         ),
+        height: 800,
         child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Text('Recent Transactions'),
             SizedBox(height: 20),
