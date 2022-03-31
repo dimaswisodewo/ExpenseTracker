@@ -1,6 +1,6 @@
 // import 'dart:html';
 // import 'dart:io';
-import 'package:flutter/cupertino.dart';
+// import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
@@ -97,6 +97,12 @@ class _MyHomePageState extends State<MyHomePage> {
   void deleteTransaction(String transactionId) {
     setState(() {
       _userTransactions.removeWhere((element) => element.id == transactionId);
+
+      // hide chart if there is no transaction
+      if (_userTransactions.length <= 0) {
+        _chartHeight = 0;
+        _showChart = false;
+      }
     });
   }
 
@@ -187,31 +193,33 @@ class _MyHomePageState extends State<MyHomePage> {
             ],
           ),
         ),
-        Container(
-          height: 60,
-          padding: EdgeInsets.symmetric(horizontal: 10),
-          child: Row(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Text('Show Chart',
-                  style: TextStyle(
-                    color: Theme.of(context).primaryColor,
-                  )),
-              Switch(
-                  value: _showChart,
-                  onChanged: (newValue) {
-                    if (newValue)
-                      _chartHeight = 250;
-                    else
-                      _chartHeight = 0;
+        _userTransactions.length > 0
+            ? Container(
+                height: 60,
+                padding: EdgeInsets.symmetric(horizontal: 10),
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Text('Show Chart',
+                        style: TextStyle(
+                          color: Theme.of(context).primaryColor,
+                        )),
+                    Switch(
+                        value: _showChart,
+                        onChanged: (newValue) {
+                          if (newValue)
+                            _chartHeight = 250;
+                          else
+                            _chartHeight = 0;
 
-                    setState(() {
-                      _showChart = newValue;
-                    });
-                  })
-            ],
-          ),
-        ),
+                          setState(() {
+                            _showChart = newValue;
+                          });
+                        })
+                  ],
+                ),
+              )
+            : Container(),
         _showChart == true
             ? Container(
                 height: 250,
