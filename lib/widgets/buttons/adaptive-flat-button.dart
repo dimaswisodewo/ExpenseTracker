@@ -17,7 +17,7 @@ class AdaptiveFlatIconButton extends StatelessWidget {
     return Platform.isIOS
         ? CupertinoButton(
             child: Padding(
-              padding: EdgeInsets.symmetric(
+              padding: const EdgeInsets.symmetric(
                 vertical: 15,
               ),
               child: Icon(
@@ -30,7 +30,7 @@ class AdaptiveFlatIconButton extends StatelessWidget {
           )
         : TextButton(
             child: Padding(
-              padding: EdgeInsets.symmetric(
+              padding: const EdgeInsets.symmetric(
                 vertical: 15,
               ),
               child: Icon(

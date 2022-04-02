@@ -26,12 +26,12 @@ class TransactionList extends StatelessWidget {
                   alignment: Alignment.center,
                 ),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 20,
               ),
               Container(
                 width: double.infinity,
-                child: Text(
+                child: const Text(
                   'You haven\'t done any transaction today',
                   textAlign: TextAlign.center,
                 ),

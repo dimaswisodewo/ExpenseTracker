@@ -25,12 +25,12 @@ class ChartBar extends StatelessWidget {
       children: [
         FittedBox(
           child: Text('+' + formatter.format(incomeAmount),
-              style: TextStyle(
+              style: const TextStyle(
                 fontSize: 11,
                 color: Colors.green,
               )),
         ),
-        SizedBox(
+        const SizedBox(
           // height: constraints.maxHeight * 0.05,
           height: 10,
         ),
@@ -43,10 +43,10 @@ class ChartBar extends StatelessWidget {
               Container(
                 decoration: BoxDecoration(
                   border: Border.all(color: Colors.grey, width: 1),
-                  color: Color.fromRGBO(220, 220, 220, 1),
-                  borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(10),
-                    topRight: Radius.circular(10),
+                  color: const Color.fromRGBO(220, 220, 220, 1),
+                  borderRadius: const BorderRadius.only(
+                    topLeft: const Radius.circular(10),
+                    topRight: const Radius.circular(10),
                   ),
                 ),
               ),
@@ -55,11 +55,11 @@ class ChartBar extends StatelessWidget {
                 child: FractionallySizedBox(
                   heightFactor: incomePercentageOfTotal,
                   child: Container(
-                    decoration: BoxDecoration(
+                    decoration: const BoxDecoration(
                       color: Colors.green,
-                      borderRadius: BorderRadius.only(
-                        topLeft: Radius.circular(10),
-                        topRight: Radius.circular(10),
+                      borderRadius: const BorderRadius.only(
+                        topLeft: const Radius.circular(10),
+                        topRight: const Radius.circular(10),
                       ),
                     ),
                   ),
@@ -77,21 +77,21 @@ class ChartBar extends StatelessWidget {
               Container(
                 decoration: BoxDecoration(
                   border: Border.all(color: Colors.grey, width: 1),
-                  color: Color.fromRGBO(220, 220, 220, 1),
-                  borderRadius: BorderRadius.only(
-                    bottomLeft: Radius.circular(10),
-                    bottomRight: Radius.circular(10),
+                  color: const Color.fromRGBO(220, 220, 220, 1),
+                  borderRadius: const BorderRadius.only(
+                    bottomLeft: const Radius.circular(10),
+                    bottomRight: const Radius.circular(10),
                   ),
                 ),
               ),
               FractionallySizedBox(
                 heightFactor: outcomePercentageOfTotal,
                 child: Container(
-                  decoration: BoxDecoration(
+                  decoration: const BoxDecoration(
                     color: Colors.red,
-                    borderRadius: BorderRadius.only(
-                      bottomLeft: Radius.circular(10),
-                      bottomRight: Radius.circular(10),
+                    borderRadius: const BorderRadius.only(
+                      bottomLeft: const Radius.circular(10),
+                      bottomRight: const Radius.circular(10),
                     ),
                   ),
                 ),
@@ -99,25 +99,25 @@ class ChartBar extends StatelessWidget {
             ],
           ),
         ),
-        SizedBox(
+        const SizedBox(
           // height: constraints.maxHeight * 0.05,
           height: 10,
         ),
         FittedBox(
           child: Text('-' + formatter.format(outcomeAmount),
-              style: TextStyle(
+              style: const TextStyle(
                 fontSize: 11,
                 color: Colors.red,
               )),
         ),
-        SizedBox(
+        const SizedBox(
           // height: constraints.maxHeight * 0.05,
           height: 10,
         ),
         FittedBox(
           child: Text(
             label,
-            style: TextStyle(
+            style: const TextStyle(
               fontSize: 11,
               color: Colors.grey,
             ),

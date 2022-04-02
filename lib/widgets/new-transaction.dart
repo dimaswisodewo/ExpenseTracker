@@ -66,7 +66,7 @@ class _NewTransactionState extends State<NewTransaction> {
         margin: EdgeInsets.only(
             bottom: MediaQuery.of(context).viewInsets.bottom + 10),
         child: Container(
-          padding: EdgeInsets.only(
+          padding: const EdgeInsets.only(
             left: 22,
             right: 22,
             top: 20,
@@ -114,7 +114,7 @@ class _NewTransactionState extends State<NewTransaction> {
                 },
               ),
               Container(
-                margin: EdgeInsets.only(top: 5),
+                margin: const EdgeInsets.only(top: 5),
                 child: Row(
                   children: [
                     Expanded(
@@ -122,7 +122,7 @@ class _NewTransactionState extends State<NewTransaction> {
                         _pickedDate == null
                             ? 'No date picked'
                             : DateFormat.yMd().format(_pickedDate!),
-                        style: TextStyle(fontSize: 16),
+                        style: const TextStyle(fontSize: 16),
                       ),
                     ),
                     AdaptiveFlatIconButton(
@@ -133,15 +133,15 @@ class _NewTransactionState extends State<NewTransaction> {
                 ),
               ),
               Container(
-                margin: EdgeInsets.only(top: 30),
+                margin: const EdgeInsets.only(top: 30),
                 child: ElevatedButton(
                   onPressed: submitData,
-                  child: Padding(
-                    padding: EdgeInsets.symmetric(
+                  child: const Padding(
+                    padding: const EdgeInsets.symmetric(
                       vertical: 10,
                       horizontal: 22,
                     ),
-                    child: Text('Add Item'),
+                    child: const Text('Add Item'),
                   ),
                 ),
               ),

@@ -42,20 +42,20 @@ class TransactionItem extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Container(
-                      decoration: BoxDecoration(
+                      decoration: const BoxDecoration(
                         color: Colors.grey,
                         borderRadius: BorderRadius.all(Radius.circular(3)),
                       ),
-                      padding: EdgeInsets.only(
+                      padding: const EdgeInsets.only(
                         top: 3,
                         bottom: 3,
                         left: 6,
                         right: 6,
                       ),
-                      margin: EdgeInsets.only(bottom: 2),
+                      margin: const EdgeInsets.only(bottom: 2),
                       child: Text(
                         DateFormat.E().format(date),
-                        style: TextStyle(
+                        style: const TextStyle(
                           color: Colors.white,
                           fontSize: 11,
                         ),
@@ -63,14 +63,14 @@ class TransactionItem extends StatelessWidget {
                     ),
                     Text(
                       DateFormat.yMMMd().format(date),
-                      style: TextStyle(
+                      style: const TextStyle(
                         color: Colors.grey,
                         fontSize: 11,
                       ),
                     ),
                     Text(
                       DateFormat.Hm().format(date),
-                      style: TextStyle(
+                      style: const TextStyle(
                         color: Colors.grey,
                         fontSize: 11,
                       ),
@@ -81,7 +81,7 @@ class TransactionItem extends StatelessWidget {
               flex: 3,
               child: Container(
                 alignment: Alignment.centerLeft,
-                padding: EdgeInsets.only(left: 20),
+                padding: const EdgeInsets.only(left: 20),
                 child: Text(title),
               ),
             ),
@@ -89,7 +89,7 @@ class TransactionItem extends StatelessWidget {
               flex: 3,
               child: Container(
                 alignment: Alignment.centerRight,
-                padding: EdgeInsets.only(left: 16),
+                padding: const EdgeInsets.only(left: 16),
                 child: Text(
                   type == TransactionType.Outcome
                       ? '-${formatCurrency.format(amount)}'
@@ -103,7 +103,7 @@ class TransactionItem extends StatelessWidget {
                 ),
               ),
             ),
-            SizedBox(width: 10),
+            const SizedBox(width: 10),
             Expanded(
               child: IconButton(
                 icon: Icon(

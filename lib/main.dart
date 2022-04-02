@@ -145,11 +145,11 @@ class _MyHomePageState extends State<MyHomePage> {
     // );
 
     final appBar = AppBar(
-      title: Text('Expense Tracker'),
+      title: const Text('Expense Tracker'),
       actions: [
         IconButton(
           onPressed: () => startAddNewTransaction(context),
-          icon: Icon(Icons.add),
+          icon: const Icon(Icons.add),
         ),
       ],
     );
@@ -159,7 +159,7 @@ class _MyHomePageState extends State<MyHomePage> {
         Container(
           height: 60,
           color: Colors.white,
-          padding: EdgeInsets.only(
+          padding: const EdgeInsets.only(
             top: 20,
             bottom: 16,
             right: 22,
@@ -173,7 +173,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 child: Center(
                   child: Text(
                     getOutcome(),
-                    style: TextStyle(
+                    style: const TextStyle(
                       color: Colors.red,
                       // fontWeight: FontWeight.bold,
                     ),
@@ -185,7 +185,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 child: Center(
                   child: Text(
                     getIncome(),
-                    style: TextStyle(
+                    style: const TextStyle(
                       color: Colors.green,
                       // fontWeight: FontWeight.bold,
                     ),
@@ -198,7 +198,7 @@ class _MyHomePageState extends State<MyHomePage> {
         _userTransactions.length > 0
             ? Container(
                 height: 60,
-                padding: EdgeInsets.symmetric(horizontal: 10),
+                padding: const EdgeInsets.symmetric(horizontal: 10),
                 child: Row(
                   mainAxisSize: MainAxisSize.min,
                   children: [
@@ -239,7 +239,7 @@ class _MyHomePageState extends State<MyHomePage> {
         _showChart == true
             ? Container(
                 height: 250,
-                margin: EdgeInsets.symmetric(horizontal: 3),
+                margin: const EdgeInsets.symmetric(horizontal: 3),
                 child: Chart(_recentTransactions),
               )
             : Container(
@@ -272,7 +272,7 @@ class _MyHomePageState extends State<MyHomePage> {
       appBar: appBar,
       body: SafeArea(child: appBody),
       floatingActionButton: FloatingActionButton(
-        child: Icon(Icons.add),
+        child: const Icon(Icons.add),
         onPressed: () => startAddNewTransaction(context),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
