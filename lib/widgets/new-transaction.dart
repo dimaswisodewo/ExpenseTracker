@@ -2,6 +2,7 @@ import 'package:expense_tracker/models/transaction.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
+import 'buttons/adaptive-flat-button.dart';
 
 class NewTransaction extends StatefulWidget {
   final Function addTransaction;
@@ -124,19 +125,10 @@ class _NewTransactionState extends State<NewTransaction> {
                         style: TextStyle(fontSize: 16),
                       ),
                     ),
-                    TextButton(
-                      child: Padding(
-                        padding: EdgeInsets.symmetric(
-                          vertical: 15,
-                        ),
-                        child: Icon(
-                          Icons.calendar_today_rounded,
-                          // size: 18,
-                          color: Theme.of(context).primaryColor,
-                        ),
-                      ),
-                      onPressed: _presentDatePicker,
-                    )
+                    AdaptiveFlatIconButton(
+                      iconData: Icons.calendar_today_rounded,
+                      handler: _presentDatePicker,
+                    ),
                   ],
                 ),
               ),

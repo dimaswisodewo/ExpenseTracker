@@ -1,13 +1,15 @@
 // import 'dart:html';
 // import 'dart:io';
 // import 'package:flutter/cupertino.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
-import './widgets/transaction-list.dart';
-import './widgets/new-transaction.dart';
-import './widgets/chart.dart';
-import './models/transaction.dart';
+import 'widgets/transaction-list.dart';
+import 'widgets/new-transaction.dart';
+import 'widgets/charts/chart.dart';
+import 'models/transaction.dart';
+import 'dart:io';
 
 main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -204,18 +206,32 @@ class _MyHomePageState extends State<MyHomePage> {
                         style: TextStyle(
                           color: Theme.of(context).primaryColor,
                         )),
-                    Switch(
-                        value: _showChart,
-                        onChanged: (newValue) {
-                          if (newValue)
-                            _chartHeight = 250;
-                          else
-                            _chartHeight = 0;
+                    Platform.isIOS
+                        ? CupertinoSwitch(
+                            value: _showChart,
+                            onChanged: (newValue) {
+                              if (newValue)
+                                _chartHeight = 250;
+                              else
+                                _chartHeight = 0;
 
-                          setState(() {
-                            _showChart = newValue;
-                          });
-                        })
+                              setState(() {
+                                _showChart = newValue;
+                              });
+                            },
+                          )
+                        : Switch(
+                            value: _showChart,
+                            onChanged: (newValue) {
+                              if (newValue)
+                                _chartHeight = 250;
+                              else
+                                _chartHeight = 0;
+
+                              setState(() {
+                                _showChart = newValue;
+                              });
+                            })
                   ],
                 ),
               )
@@ -235,7 +251,8 @@ class _MyHomePageState extends State<MyHomePage> {
               appBar.preferredSize.height -
               60 -
               _chartHeight -
-              60),
+              60 -
+              34),
           child: TransactionList(
             transactions: _userTransactions,
             deleteTransaction: deleteTransaction,

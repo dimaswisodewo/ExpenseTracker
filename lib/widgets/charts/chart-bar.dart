@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 class ChartBar extends StatelessWidget {
   final String label;
@@ -7,7 +8,9 @@ class ChartBar extends StatelessWidget {
   final double incomeAmount;
   final double incomePercentageOfTotal;
 
-  const ChartBar({
+  final NumberFormat formatter = NumberFormat.currency(locale: 'id_ID');
+
+  ChartBar({
     required this.label,
     required this.outcomeAmount,
     required this.outcomePercentageOfTotal,
@@ -21,7 +24,7 @@ class ChartBar extends StatelessWidget {
     return Column(
       children: [
         FittedBox(
-          child: Text('+$incomeAmount',
+          child: Text('+' + formatter.format(incomeAmount),
               style: TextStyle(
                 fontSize: 11,
                 color: Colors.green,
@@ -101,7 +104,7 @@ class ChartBar extends StatelessWidget {
           height: 10,
         ),
         FittedBox(
-          child: Text('-$outcomeAmount',
+          child: Text('-' + formatter.format(outcomeAmount),
               style: TextStyle(
                 fontSize: 11,
                 color: Colors.red,
