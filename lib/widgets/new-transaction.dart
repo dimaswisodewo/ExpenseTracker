@@ -7,7 +7,10 @@ import 'buttons/adaptive-flat-button.dart';
 class NewTransaction extends StatefulWidget {
   final Function addTransaction;
 
-  NewTransaction({required this.addTransaction});
+  const NewTransaction({
+    Key? key,
+    required this.addTransaction,
+  }) : super(key: key);
 
   @override
   _NewTransactionState createState() => _NewTransactionState();

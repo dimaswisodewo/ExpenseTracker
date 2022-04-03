@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import './transaction-item.dart';
 import '../models/transaction.dart';
@@ -14,6 +16,9 @@ class TransactionList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    const List<Color> colorsData = [Colors.black, Colors.blue, Colors.green];
+    int pickedColor = Random().nextInt(colorsData.length);
+
     return transactions.isEmpty
         ? Column(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -43,6 +48,7 @@ class TransactionList extends StatelessWidget {
             shrinkWrap: true,
             itemBuilder: (context, index) {
               return TransactionItem(
+                key: ValueKey(transactions[index].id),
                 title: transactions[index].title,
                 type: transactions[index].type,
                 amount: transactions[index].amount,
@@ -52,5 +58,17 @@ class TransactionList extends StatelessWidget {
               );
             },
           );
+    // : ListView(
+    //     children: transactions.map((tx) {
+    //       return TransactionItem(
+    //         key: ValueKey(tx.id),
+    //         title: tx.title,
+    //         type: tx.type,
+    //         amount: tx.amount,
+    //         date: tx.date,
+    //         deleteTransaction: deleteTransaction(tx.id),
+    //       );
+    //     }).toList(),
+    //   );
   }
 }
